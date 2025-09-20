@@ -1,6 +1,7 @@
 "use client";
 import { WishlistItem } from "@/types/wishlist.type";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -27,6 +28,7 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
   const [wishlistIdProducts, setWishlistIdProducts] = useState<string[]>([]);
   const [isLoadingId, setIsLoadingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const session = useSession();
 
@@ -51,7 +53,10 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addToWishlist = async (productId: string) => {
-    if (!session.data) return;
+    if (!session.data) {
+      router.push("/login");
+      return;
+    }
     setIsLoadingId(productId);
     const response = await fetch("/api/addToWishlist", {
       method: "POST",
@@ -70,7 +75,10 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteFromWishlist = async (productId: string) => {
-    if (!session.data) return;
+    if (!session.data) {
+      router.push("/login");
+      return;
+    }
     setIsLoadingId(productId);
     try {
       const response = await fetch(`/api/wishlist/${productId}`, {
