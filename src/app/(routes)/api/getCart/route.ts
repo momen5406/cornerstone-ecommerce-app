@@ -5,6 +5,8 @@ export async function GET() {
   const userToken = await getUserToken();
 
   const response = await fetch(`${process.env.API_URL}/cart`, {
+    method: "GET",
+    credentials: "include",
     headers: {
       token: userToken + "",
     },

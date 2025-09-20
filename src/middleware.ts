@@ -11,30 +11,39 @@ const protectedPages = [
 const authPages = ["/login", "/register"];
 
 export default async function middleware(req: NextRequest) {
-  const token = await getToken({ req });
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const { pathname } = req.nextUrl;
-
-  const baseUrl =
-    process.env.NEXTAUTH_URL || process.env.NEXT_URL || req.nextUrl.origin;
 
   // 🔒 Protect pages
   if (protectedPages.some((page) => pathname.startsWith(page))) {
     if (!token) {
-      const redirectUrl = new URL("/login", baseUrl);
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = "/login";
       redirectUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(redirectUrl);
     }
-    return NextResponse.next();
   }
 
   // 🚫 Block auth pages for logged-in users
   if (authPages.includes(pathname)) {
     if (token) {
-      const redirectUrl = new URL("/", baseUrl);
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = "/";
       return NextResponse.redirect(redirectUrl);
     }
-    return NextResponse.next();
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: [
+    "/cart",
+    "/account",
+    "/wishlist",
+    "/address",
+    "/allorders",
+    "/login",
+    "/register",
+  ],
+};
