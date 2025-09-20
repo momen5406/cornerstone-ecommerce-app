@@ -36,7 +36,11 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
     if (!session.data) return;
     setIsLoading(true);
     try {
-      const response = await fetch("/api/getWishlist");
+      const response = await fetch("/api/getWishlist", {
+        headers: {
+          token: session.data.token,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
