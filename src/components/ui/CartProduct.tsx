@@ -8,6 +8,7 @@ import QuantitySelector from "@/components/ui/QuantitySelector";
 import { CartContext } from "@/context/CartContext";
 import { Item } from "@/types/Cart.type";
 import { Loader2, Trash } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,11 +16,15 @@ import toast from "react-hot-toast";
 const CartProduct = ({ product }: { product: Item }) => {
   const { setCartData, getUserCart, cartData } = useContext(CartContext);
   const [isClearing, setIsClearing] = useState(false);
+  const session = useSession();
 
   const deleteItem = async ({ id }: { id: string }) => {
     setIsClearing(true);
-    const response = await fetch(`http://localhost:3000/api/cart/${id}`, {
+    const response = await fetch(`/api/cart/${id}`, {
       method: "DELETE",
+      headers: {
+        token: session.data?.token + "",
+      },
     });
 
     const data = await response.json();

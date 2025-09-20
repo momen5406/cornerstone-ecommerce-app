@@ -32,6 +32,9 @@ const AddToCartButton = ({
     try {
       const response = await fetch("/api/addToCart", {
         method: "POST",
+        headers: {
+          token: session.token,
+        },
         body: JSON.stringify({ productId: id }),
       });
 

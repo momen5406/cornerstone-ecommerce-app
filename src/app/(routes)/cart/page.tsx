@@ -10,16 +10,20 @@ import { WishlistContext } from "@/context/WishlistContext";
 import { Loader2, ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import CheckoutDialog from "@/components/features/CheckoutDialog";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
   const { cartData, isLoading, setCartData } = useContext(CartContext);
   const [isClearing, setIsClearing] = useState(false);
-  console.log(cartData);
+  const session = useSession();
 
   const clearCart = async () => {
     setIsClearing(true);
-    const response = await fetch(`http://localhost:3000/api/clearCart`, {
+    const response = await fetch(`/api/clearCart`, {
       method: "DELETE",
+      headers: {
+        token: session.data?.token + "",
+      },
     });
 
     setCartData({
@@ -43,12 +47,7 @@ const Cart = () => {
   const { wishlist } = useContext(WishlistContext);
   const numberOfWishlistProducts = Array.from({ length: 5 });
 
-  if (
-    isLoading ||
-    !cartData?.data?.products ||
-    !wishlist ||
-    typeof cartData?.data.products[0]?.product == "string"
-  ) {
+  if (isLoading || typeof cartData?.data.products[0]?.product == "string") {
     return <Loading />;
   }
 

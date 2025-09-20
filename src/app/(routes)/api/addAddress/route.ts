@@ -1,20 +1,39 @@
-import { getUserToken } from "@/helpers/getUserToken";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const userToken = await getUserToken();
+  try {
+    // Get token from request headers
+    const token = req.headers.get("token");
 
-  const values = await req.json();
+    if (!token) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
 
-  const response = await fetch(`${process.env.API_URL}/addresses`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      token: userToken + "",
-    },
-    body: JSON.stringify(values),
-  });
-  const data = await response.json();
+    // Get the request body
+    const values = await req.json();
 
-  return NextResponse.json(data);
+    const response = await fetch(`${process.env.API_URL}/addresses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token, // send token in headers
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { message: "Failed to create address" },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (err) {
+    return NextResponse.json(
+      { message: "Server error", error: err },
+      { status: 500 }
+    );
+  }
 }

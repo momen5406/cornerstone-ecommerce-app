@@ -64,6 +64,9 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
     setIsLoadingId(productId);
     const response = await fetch("/api/addToWishlist", {
       method: "POST",
+      headers: {
+        token: session.data.token,
+      },
       body: JSON.stringify({ productId }),
     });
 
@@ -87,6 +90,9 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       const response = await fetch(`/api/wishlist/${productId}`, {
         method: "DELETE",
+        headers: {
+          token: session.data.token,
+        },
       });
 
       await response.json();

@@ -31,7 +31,11 @@ const AddressContextProvider = ({ children }: { children: ReactNode }) => {
     if (!session.data) return;
 
     setIsLoading(true);
-    const response = await fetch("/api/getAddresses");
+    const response = await fetch("/api/getAddresses", {
+      headers: {
+        token: session.data.token,
+      },
+    });
 
     const { data } = await response.json();
     setAddresses(data as Address[]);
@@ -49,6 +53,9 @@ const AddressContextProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     const response = await fetch("/api/addAddress", {
       method: "POST",
+      headers: {
+        token: session.data.token,
+      },
       body: JSON.stringify(values),
     });
 
@@ -65,6 +72,9 @@ const AddressContextProvider = ({ children }: { children: ReactNode }) => {
     setIsLoadingId(addressId);
     const response = await fetch(`/api/address/${addressId}`, {
       method: "DELETE",
+      headers: {
+        token: session.data.token,
+      },
     });
 
     const { data } = await response.json();

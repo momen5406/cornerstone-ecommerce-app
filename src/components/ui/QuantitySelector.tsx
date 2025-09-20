@@ -4,6 +4,7 @@ import { Button } from "./button";
 import { CartContext } from "@/context/CartContext";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 const QuantitySelector = ({
   numberOfItems,
@@ -18,16 +19,17 @@ const QuantitySelector = ({
   const [isLoading, setIsLoading] = useState(false);
   const priceOfAll = numberOfItems * priceOfOne;
 
+  const session = useSession();
   const changeQuantity = async (count: number) => {
     setIsLoading(true);
 
-    const response = await fetch(
-      `http://localhost:3000/api/cart/${productId}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ count }),
-      }
-    );
+    const response = await fetch(`/api/cart/${productId}`, {
+      method: "PUT",
+      headers: {
+        token: session.data?.token + "",
+      },
+      body: JSON.stringify({ count }),
+    });
     const data = await response.json();
     setCartData(data);
     setIsLoading(false);
