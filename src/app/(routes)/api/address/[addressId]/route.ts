@@ -2,17 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { addressId: string } }
+  context: { params: Promise<{ addressId: string }> }
 ) {
   try {
-    // Get token from request headers
     const token = req.headers.get("token");
-
     if (!token) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { addressId } = context.params;
+    // Await params because App Router wraps it in a Promise
+    const { addressId } = await context.params;
 
     const response = await fetch(
       `${process.env.API_URL}/addresses/${addressId}`,
@@ -20,7 +19,7 @@ export async function DELETE(
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          token, // pass token in headers
+          token,
         },
       }
     );

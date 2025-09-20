@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // DELETE product from cart
 export async function DELETE(
   req: NextRequest,
-  context: { params: { productId: string } }
+  context: { params: Promise<{ productId: string }> } // <-- Must be Promise
 ) {
   try {
     const token = req.headers.get("token");
@@ -11,7 +11,7 @@ export async function DELETE(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { productId } = context.params;
+    const { productId } = await context.params; // <-- Await because it's a Promise
 
     const response = await fetch(`${process.env.API_URL}/cart/${productId}`, {
       method: "DELETE",
@@ -34,7 +34,7 @@ export async function DELETE(
 // UPDATE product count in cart
 export async function PUT(
   req: NextRequest,
-  context: { params: { productId: string } }
+  context: { params: Promise<{ productId: string }> } // <-- Must be Promise
 ) {
   try {
     const token = req.headers.get("token");
@@ -42,7 +42,7 @@ export async function PUT(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { productId } = context.params;
+    const { productId } = await context.params; // <-- Await because it's a Promise
     const { count } = await req.json();
 
     const response = await fetch(`${process.env.API_URL}/cart/${productId}`, {

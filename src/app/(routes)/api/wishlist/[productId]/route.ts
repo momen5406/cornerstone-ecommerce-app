@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { productId: string } }
+  context: { params: Promise<{ productId: string }> } // <-- Must be Promise
 ) {
   try {
     const token = req.headers.get("token");
@@ -10,7 +10,8 @@ export async function DELETE(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { productId } = context.params;
+    // Await because params is a Promise
+    const { productId } = await context.params;
 
     const response = await fetch(
       `${process.env.API_URL}/wishlist/${productId}`,

@@ -47,7 +47,12 @@ const Cart = () => {
   const { wishlist } = useContext(WishlistContext);
   const numberOfWishlistProducts = Array.from({ length: 5 });
 
-  if (isLoading || typeof cartData?.data.products[0]?.product == "string") {
+  if (
+    isLoading ||
+    !cartData?.data?.products ||
+    !wishlist ||
+    typeof cartData?.data.products[0]?.product == "string"
+  ) {
     return <Loading />;
   }
 
