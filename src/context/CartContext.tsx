@@ -30,7 +30,9 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/getCart", {
-        credentials: "include", // 🔥 ensure cookies/session token is sent
+        headers: {
+          token: session.data.token,
+        },
       });
       const data = await response.json();
 
