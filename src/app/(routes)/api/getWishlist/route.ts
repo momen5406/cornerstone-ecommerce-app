@@ -1,16 +1,18 @@
+import { authOptions } from "@/auth";
 import { getUserToken } from "@/helpers/getUserToken";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const userToken = await getUserToken();
+  const session = await getServerSession(authOptions);
 
-  if (!userToken) {
+  if (!session || !session.user?.token) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const response = await fetch(`${process.env.API_URL}/wishlist`, {
     headers: {
-      token: userToken,
+      token: session.user.token,
     },
   });
 

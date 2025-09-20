@@ -66,13 +66,11 @@ const Footer = () => {
               </h5>
               <ul className="space-y-2">
                 {link.quickLinks.map((quickLink, i) => (
-                  <li key={i} className="capitalize">
-                    <Link
-                      href={quickLink}
-                      className="text-neutral-600 dark:text-neutral-400 hover:text-accent transition-colors duration-200"
-                    >
-                      {quickLink}
-                    </Link>
+                  <li
+                    key={i}
+                    className="capitalize text-neutral-600 dark:text-neutral-400 hover:text-accent transition-colors duration-200"
+                  >
+                    {quickLink}
                   </li>
                 ))}
               </ul>
