@@ -2,6 +2,8 @@
 import { Cart } from "@/types/Cart.type";
 import { useSession } from "next-auth/react";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const CartContext = createContext<{
   cartData: Cart | null;
@@ -20,21 +22,44 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const session = useSession();
+  const router = useRouter();
 
   const getUserCart = async () => {
     if (!session.data) return;
-    const response = await fetch("/api/getCart");
-    const data: Cart = await response.json();
 
-    setCartData(data);
-    if (cartData?.data.cartOwner) {
-      localStorage.setItem("userId", cartData?.data.cartOwner);
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/getCart", {
+        credentials: "include", // 🔥 ensure cookies/session token is sent
+      });
+      const data = await response.json();
+
+      if (
+        data.statusMsg === "fail" &&
+        data.message === "Invalid Token. please login again"
+      ) {
+        setCartData(null);
+        toast.error("Invalid token. Please login again.");
+        router.push("/login");
+        return;
+      }
+
+      setCartData(data);
+
+      // save cart owner to localStorage if exists
+      if (data?.data?.cartOwner) {
+        localStorage.setItem("userId", data.data.cartOwner);
+      }
+    } catch (err) {
+      console.error("Error fetching cart:", err);
+      toast.error("Something went wrong while loading your cart.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (session.status == "authenticated") {
+    if (session.status === "authenticated") {
       getUserCart();
     }
   }, [session.status]);
