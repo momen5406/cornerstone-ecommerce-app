@@ -19,7 +19,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const session = useSession();
-  console.log(session);
 
   return (
     <>

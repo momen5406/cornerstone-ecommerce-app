@@ -54,6 +54,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         alt={product.title}
         width={500}
         height={500}
+        priority
         className="w-full aspect-square object-cover rounded-md mb-3"
       />
 

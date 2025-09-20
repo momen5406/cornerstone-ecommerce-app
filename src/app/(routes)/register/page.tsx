@@ -54,7 +54,6 @@ const Register = () => {
       if (!res.ok) {
         throw new Error(data.message || "Something went wrong");
       }
-      console.log(data);
 
       toast.success("Account created successfully! 🎉");
       router.push("/login");

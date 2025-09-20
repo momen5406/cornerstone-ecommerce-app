@@ -29,7 +29,6 @@ const SpecificBrand = async ({ params }: { params: { brandID: string } }) => {
     );
   }
 
-  console.log(products);
 
   return (
     <div className="container my-16">

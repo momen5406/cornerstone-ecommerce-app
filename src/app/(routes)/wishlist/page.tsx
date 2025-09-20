@@ -9,7 +9,6 @@ import React, { useContext } from "react";
 const Wishlist = () => {
   const { wishlist } = useContext(WishlistContext);
 
-  console.log(wishlist);
 
   return (
     <div className="container my-17">

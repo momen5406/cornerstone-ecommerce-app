@@ -45,6 +45,7 @@ const CheckoutDialog = ({
   const [isCashLoading, setIsCashLoading] = useState(false);
   const session = useSession();
   const router = useRouter();
+  
 
   const createVisaOrder = async () => {
     setIsLoading(true);
@@ -70,7 +71,6 @@ const CheckoutDialog = ({
       }
     );
     const data = await response.json();
-    console.log(data);
     setIsLoading(false);
 
     if (data.status == "success") {
@@ -100,7 +100,6 @@ const CheckoutDialog = ({
       }
     );
     const data = await response.json();
-    console.log(data);
     setIsCashLoading(false);
 
     if (data.status == "success") {
@@ -130,7 +129,6 @@ const CheckoutDialog = ({
         city: values.city,
       },
     };
-    console.log(payload);
   };
 
   return (
@@ -158,7 +156,7 @@ const CheckoutDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        {addresses ? (
+        {addresses?.length != 0 ? (
           <div className="flex flex-col w-full gap-2">
             {addresses?.map((address) => (
               <AddressCard
@@ -240,7 +238,7 @@ const CheckoutDialog = ({
           </Form>
         )}
 
-        {addresses && (
+        {addresses?.length !=0 && (
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" type="button">

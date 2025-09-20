@@ -26,6 +26,7 @@ const Brands = async () => {
                   alt={brand.name}
                   width={120}
                   height={120}
+                  priority
                   className="object-contain max-h-24 max-w-full group-hover:scale-110 transition-transform duration-300"
                 />
               </div>

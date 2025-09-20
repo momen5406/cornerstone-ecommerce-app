@@ -72,7 +72,6 @@ const WishlistContextProvider = ({ children }: { children: ReactNode }) => {
 
     const data = await response.json();
 
-    console.log(data);
     setWishlist((prev) => [...prev, data.data]);
     setWishlistIdProducts((prev) => [...prev, productId]);
     setIsLoadingId(null);

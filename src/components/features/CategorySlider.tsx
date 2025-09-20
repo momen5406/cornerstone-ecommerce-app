@@ -34,6 +34,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
               alt="Banner 1"
               height={400}
               width={1200}
+              priority
             />
             <h3 className="capitalize font-semibold mt-2">{category.name}</h3>
           </Link>

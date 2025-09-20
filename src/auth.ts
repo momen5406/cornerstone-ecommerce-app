@@ -24,7 +24,6 @@ export const authOptions: AuthOptions = {
 
         const payload: SuccessLoginResponse | FailedLoginResponse =
           await response.json();
-        console.log(payload);
 
         if ("token" in payload) {
           return {

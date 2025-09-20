@@ -59,7 +59,6 @@ const AddressContextProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify(values),
     });
 
-    console.log(values);
 
     const { data } = await response.json();
     setAddresses(data as Address[]); // update with new list

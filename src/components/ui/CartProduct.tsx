@@ -64,6 +64,7 @@ const CartProduct = ({ product }: { product: Item }) => {
           alt={product.product.title}
           width={120}
           height={120}
+          priority
           className="w-full h-full object-cover rounded-lg bg-gray-100"
         />
       </div>

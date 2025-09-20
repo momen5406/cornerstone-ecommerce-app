@@ -40,7 +40,7 @@ const Cart = () => {
       },
       numOfCartItems: 0,
     });
-    setIsClearing(true);
+    setIsClearing(false);
     toast.success("Your cart is now empty.");
   };
 
@@ -55,6 +55,8 @@ const Cart = () => {
   ) {
     return <Loading />;
   }
+
+
 
   return (
     <div className="container my-16">

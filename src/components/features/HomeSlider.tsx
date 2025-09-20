@@ -29,6 +29,7 @@ const HomeSlider = () => {
           alt="Banner 1"
           height={400}
           width={1200}
+          priority
         />
       </SwiperSlide>
       <SwiperSlide>
@@ -38,6 +39,7 @@ const HomeSlider = () => {
           alt="Banner 2"
           height={400}
           width={1200}
+          priority
         />
       </SwiperSlide>
       <SwiperSlide>
@@ -47,6 +49,7 @@ const HomeSlider = () => {
           alt="Banner 3"
           height={400}
           width={1200}
+          priority
         />
       </SwiperSlide>
       <SwiperSlide>
@@ -56,6 +59,7 @@ const HomeSlider = () => {
           alt="Banner 4"
           height={400}
           width={1200}
+          priority
         />
       </SwiperSlide>
     </Swiper>

@@ -34,7 +34,6 @@ const ResetCodeForm = () => {
       );
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok && data.status === "Success") {
         toast.success("Reset code verified successfully!");

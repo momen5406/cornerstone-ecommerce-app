@@ -30,6 +30,7 @@ const Orders = () => {
     );
     const data: Order[] = await response.json();
     setOrders(data);
+    
   }, [decoded]);
 
   useEffect(() => {

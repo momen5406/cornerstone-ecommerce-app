@@ -56,6 +56,7 @@ const OrderCard: React.FC<Props> = ({ order }) => {
                   alt={item.product.title}
                   width={64}
                   height={64}
+                  priority
                   className="rounded-md object-cover"
                 />
                 <div className="flex-1">
@@ -74,15 +75,19 @@ const OrderCard: React.FC<Props> = ({ order }) => {
           </div>
         </div>
 
-        <Separator />
-
-        {/* Shipping */}
-        <div>
-          <h4 className="font-medium text-gray-700 mb-2">Shipping</h4>
-          <p className="text-sm">{order.shippingAddress.details}</p>
-          <p className="text-sm">{order.shippingAddress.city}</p>
-          <p className="text-sm">{order.shippingAddress.phone}</p>
-        </div>
+        {
+          order.shippingAddress && <>
+          <Separator />
+          
+          {/* Shipping */}
+          <div>
+            <h4 className="font-medium text-gray-700 mb-2">Shipping</h4>
+            <p className="text-sm">{order.shippingAddress.details}</p>
+            <p className="text-sm">{order.shippingAddress.city}</p>
+            <p className="text-sm">{order.shippingAddress.phone}</p>
+          </div>
+        </>
+        }
 
         <Separator />
 

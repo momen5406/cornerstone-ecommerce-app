@@ -25,6 +25,7 @@ const Categories = async () => {
                 alt={category.name}
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover aspect-square group-hover:scale-105 transition-transform duration-500"
               />
 

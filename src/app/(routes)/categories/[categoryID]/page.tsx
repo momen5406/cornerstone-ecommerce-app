@@ -33,7 +33,6 @@ const SpecificCategory = async ({
     );
   }
 
-  console.log(products);
 
   return (
     <div className="container my-16">

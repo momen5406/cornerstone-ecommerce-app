@@ -7,7 +7,6 @@ import React, { useContext } from "react";
 
 const Addresses = () => {
   const { addresses } = useContext(AddressContext);
-  console.log(addresses);
 
   return (
     <div className="container my-17">
